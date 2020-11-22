@@ -6,7 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "monday-ui-react-core/dist/main.css";
 import "./App.css";
 
-const monday = mondaySdk();
+export const monday = mondaySdk();
 
 const DELETE_DIR = "left";
 const KEEP_DIR = "right";
@@ -99,7 +99,7 @@ class App extends React.Component {
   }
 
   render() {
-    const hasSelectedBacklogGroup = this.state.settings?.backlog_group !== null;
+    const hasSelectedBacklogGroup = this.state.settings.backlog_group ?? false;
     return (
       <div className="App">
         {hasSelectedBacklogGroup ? (
@@ -111,7 +111,7 @@ class App extends React.Component {
             onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}
           />
         ) : (
-          <p>
+          <p data-testid="choose-backlog-group">
             Please select a backlog group in the settings panel for this view.
           </p>
         )}

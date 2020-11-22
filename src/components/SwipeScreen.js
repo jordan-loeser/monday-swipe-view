@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import TinderCard from "react-tinder-card";
 import { Button } from "monday-ui-react-core";
@@ -38,46 +38,51 @@ const SwipeScreen = ({
   onSwipe,
   onTrashButtonPress,
   onKeepButtonPress,
-}) => (
-  <>
-    {items.length > 0 ? (
+}) => {
+  if (!items) return null;
+  return (
+    <div data-testid="swipe-screen">
       <CardContainer>
         {loading ? (
-          <p>Loading...</p>
+          <p data-testid="swipe-loader">Loading...</p>
+        ) : items.length > 0 ? (
+          <div data-testid="swipe-cards">
+            {items.map((item, i) => (
+              <Swipable
+                key={`swipe-${i}`}
+                onSwipe={(dir) => onSwipe(dir, item)}
+                preventSwipe={["up", "down"]}
+              >
+                <Card>{item.name}</Card>
+              </Swipable>
+            ))}
+          </div>
         ) : (
-          items.map((item, i) => (
-            <Swipable
-              key={`swipe-${i}`}
-              onSwipe={(dir) => onSwipe(dir, item)}
-              preventSwipe={["up", "down"]}
-            >
-              <Card>{item.name}</Card>
-            </Swipable>
-          ))
+          <p data-testid="items-empty-instructions">
+            You've swiped on all the items! Press finish or select a new board.
+          </p>
         )}
       </CardContainer>
-    ) : (
-      <p>You've swiped on all the items! Press finish or select a new board.</p>
-    )}
-    <ButtonContainer>
-      <Button
-        size={Button.sizes.MEDIUM}
-        rightIcon="fa fa-chevron-right"
-        onClick={onTrashButtonPress}
-        disabled={!(items.length > 0)}
-      >
-        Trash It
-      </Button>
-      <Button
-        size={Button.sizes.MEDIUM}
-        rightIcon="fa fa-chevron-right"
-        onClick={onKeepButtonPress}
-        disabled={!(items.length > 0)}
-      >
-        Keep It
-      </Button>
-    </ButtonContainer>
-  </>
-);
+      <ButtonContainer>
+        <Button
+          size={Button.sizes.MEDIUM}
+          rightIcon="fa fa-chevron-right"
+          onClick={onTrashButtonPress}
+          disabled={!(items.length > 0)}
+        >
+          Trash It
+        </Button>
+        <Button
+          size={Button.sizes.MEDIUM}
+          rightIcon="fa fa-chevron-right"
+          onClick={onKeepButtonPress}
+          disabled={!(items.length > 0)}
+        >
+          Keep It
+        </Button>
+      </ButtonContainer>
+    </div>
+  );
+};
 
 export default SwipeScreen;
