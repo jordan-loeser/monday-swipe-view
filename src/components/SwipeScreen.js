@@ -1,7 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
 import TinderCard from "react-tinder-card";
 import { Button } from "monday-ui-react-core";
+import Card from "./Card";
 
 const SwipeScreenContainer = styled.div`
   display: flex;
@@ -21,20 +22,10 @@ const CardContainer = styled.div`
 
 const Swipable = styled(TinderCard)`
   position: absolute;
-`;
-
-const Card = styled.div`
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  background-color: #fff;
-  width: 80vw;
-  max-width: 260px;
-  height: 300px;
-  border-radius: 20px;
-  background-size: cover;
-  background-position: center;
-  border: 1px solid #e9e9e9;
+  border-radius: 16px;
+  &:first-child {
+    box-shadow: 0px 6px 20px -2px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -66,7 +57,7 @@ const SwipeScreen = ({
                 onSwipe={(dir) => onSwipe(dir, item)}
                 preventSwipe={["up", "down"]}
               >
-                <Card>{item.name}</Card>
+                <Card item={item} />
               </Swipable>
             ))}
           </div>

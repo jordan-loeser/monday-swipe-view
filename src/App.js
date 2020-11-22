@@ -31,7 +31,6 @@ class App extends React.Component {
   }
 
   pullGroupData() {
-    // TODO: add confirmation before overriding existing selections
     if (!this.state.settings.backlog_group) return;
     this.setState({ loading: true });
     monday
@@ -106,24 +105,13 @@ class App extends React.Component {
           <SwipeScreen
             loading={this.state.loading}
             items={this.state.items}
-            onSwipe={this.onSwipe}
+            onSwipe={this.onSwipe.bind(this)}
             onTrashButtonPress={() => this.swipeOnTopItem(DELETE_DIR)}
             onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}
           />
         ) : (
           <InstructionsScreen />
         )}
-
-        {/* <div style={{ maxWidth: "500px" }}>
-          <p>Group: {this.state.settings?.backlog_group}</p>
-          <p>
-            {this.state.lastAction &&
-              `You just swiped: ${this.state.lastAction?.direction} on ${this.state.lastAction?.name}`}
-          </p>
-          <p>Items: {JSON.stringify(this.state.items, null, 1)}</p>
-          <p>Trash: {JSON.stringify(this.state.trash, null, 1)}</p>
-          <p>Keep: {JSON.stringify(this.state.keep, null, 1)}</p>
-        </div> */}
       </div>
     );
   }

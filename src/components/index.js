@@ -1,4 +1,5 @@
-import SwipeScreen from "./SwipeScreen";
+import Card from "./Card";
 import InstructionsScreen from "./InstructionsScreen";
+import SwipeScreen from "./SwipeScreen";
 
-export { SwipeScreen, InstructionsScreen };
+export { Card, InstructionsScreen, SwipeScreen };
