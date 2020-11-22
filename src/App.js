@@ -2,7 +2,10 @@ import React from "react";
 import mondaySdk from "monday-sdk-js";
 import TinderCard from "react-tinder-card";
 import styled from "styled-components";
+import { Button } from "monday-ui-react-core";
 
+import "@fortawesome/fontawesome-free/css/all.css";
+import "monday-ui-react-core/dist/main.css";
 import "./App.css";
 
 const monday = mondaySdk();
@@ -11,7 +14,7 @@ const monday = mondaySdk();
 const CardContainer = styled.div`
   width: 100vh;
   max-width: 260px;
-  height: 300px;
+  min-height: 300px;
 `;
 
 const Swipable = styled(TinderCard)`
@@ -30,6 +33,10 @@ const Card = styled.div`
   background-size: cover;
   background-position: center;
   border: 1px solid #e9e9e9;
+`;
+
+const ButtonContainer = styled.div`
+  padding: 24px;
 `;
 
 const DELETE_DIR = "left";
@@ -97,21 +104,35 @@ class App extends React.Component {
     });
   }
 
+  trashItem(itemToTrash) {
+    console.log("removing: " + itemToTrash.id);
+    this.setState((prevState) => ({
+      trash: prevState.trash.concat(itemToTrash),
+      items: prevState.items.filter((item) => itemToTrash.id !== item.id),
+    }));
+  }
+
+  keepItem(itemToKeep) {
+    console.log("keeping: " + itemToKeep.id);
+    this.setState((prevState) => ({
+      keep: prevState.keep.concat(itemToKeep),
+      items: prevState.items.filter((item) => itemToKeep.id !== item.id),
+    }));
+  }
+
+  swipeOnTopItem(direction) {
+    const remainingItems = this.state.items;
+    if (remainingItems.length > 0) {
+      const topItem = remainingItems[remainingItems.length - 1];
+      this.onSwipe(direction, topItem);
+    }
+  }
+
   onSwipe(direction, swipedItem) {
     console.log("You swiped: " + direction, "on", swipedItem.id);
-    if (direction === DELETE_DIR) {
-      console.log("removing: " + swipedItem.id);
-      this.setState((prevState) => ({
-        trash: prevState.trash.concat(swipedItem),
-        items: prevState.items.filter((item) => swipedItem.id !== item.id),
-      }));
-    } else if (direction === KEEP_DIR) {
-      console.log("keeping: " + swipedItem.id);
-      this.setState((prevState) => ({
-        keep: prevState.keep.concat(swipedItem),
-        items: prevState.items.filter((item) => swipedItem.id !== item.id),
-      }));
-    }
+    direction === DELETE_DIR
+      ? this.trashItem(swipedItem)
+      : this.keepItem(swipedItem);
     this.setState({ lastAction: { direction, name: swipedItem.name } });
   }
 
@@ -121,10 +142,17 @@ class App extends React.Component {
 
   renderCards() {
     const hasSelectedBacklogGroup = this.state.settings?.backlog_group !== null;
+    if (!hasSelectedBacklogGroup) {
+      return (
+        <CardContainer>
+          <p>Select a backlog board in your settings!</p>
+        </CardContainer>
+      );
+    }
     return (
-      <CardContainer>
-        {hasSelectedBacklogGroup ? (
-          this.state?.items.map((item, i) => (
+      <>
+        <CardContainer>
+          {this.state?.items.map((item, i) => (
             <Swipable
               key={`swipe-${i}`}
               onSwipe={(dir) => this.onSwipe(dir, item)}
@@ -133,11 +161,25 @@ class App extends React.Component {
             >
               <Card>{item.name}</Card>
             </Swipable>
-          ))
-        ) : (
-          <p>Select a backlog board in your settings!</p>
-        )}
-      </CardContainer>
+          ))}
+        </CardContainer>
+        <ButtonContainer>
+          <Button
+            size={Button.sizes.MEDIUM}
+            rightIcon="fa fa-chevron-right"
+            onClick={() => this.swipeOnTopItem(DELETE_DIR)}
+          >
+            Trash It
+          </Button>
+          <Button
+            size={Button.sizes.MEDIUM}
+            rightIcon="fa fa-chevron-right"
+            onClick={() => this.swipeOnTopItem(KEEP_DIR)}
+          >
+            Keep It
+          </Button>
+        </ButtonContainer>
+      </>
     );
   }
 
