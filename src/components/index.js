@@ -1,3 +1,4 @@
 import SwipeScreen from "./SwipeScreen";
+import InstructionsScreen from "./InstructionsScreen";
 
-export { SwipeScreen };
+export { SwipeScreen, InstructionsScreen };

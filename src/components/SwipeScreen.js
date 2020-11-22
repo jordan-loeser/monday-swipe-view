@@ -3,6 +3,15 @@ import styled from "styled-components";
 import TinderCard from "react-tinder-card";
 import { Button } from "monday-ui-react-core";
 
+const SwipeScreenContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+`;
+
 // We want this to take up space even if there are no cards...
 const CardContainer = styled.div`
   width: 100vh;
@@ -32,6 +41,10 @@ const ButtonContainer = styled.div`
   padding: 24px;
 `;
 
+const StyledButton = styled(Button)`
+  margin: 0px 8px;
+`;
+
 const SwipeScreen = ({
   loading,
   items,
@@ -41,7 +54,7 @@ const SwipeScreen = ({
 }) => {
   if (!items) return null;
   return (
-    <div data-testid="swipe-screen">
+    <SwipeScreenContainer data-testid="swipe-screen">
       <CardContainer>
         {loading ? (
           <p data-testid="swipe-loader">Loading...</p>
@@ -64,24 +77,28 @@ const SwipeScreen = ({
         )}
       </CardContainer>
       <ButtonContainer>
-        <Button
-          size={Button.sizes.MEDIUM}
-          rightIcon="fa fa-chevron-right"
+        <StyledButton
           onClick={onTrashButtonPress}
           disabled={!(items.length > 0)}
+          size={Button.sizes.LARGE}
+          kind={Button.kinds.SECONDARY}
+          color={Button.colors.POSITIVE}
+          leftIcon="fa fa-chevron-left"
         >
           Trash It
-        </Button>
-        <Button
-          size={Button.sizes.MEDIUM}
-          rightIcon="fa fa-chevron-right"
+        </StyledButton>
+        <StyledButton
           onClick={onKeepButtonPress}
           disabled={!(items.length > 0)}
+          size={Button.sizes.LARGE}
+          kind={Button.kinds.SECONDARY}
+          color={Button.colors.NEGATIVE}
+          rightIcon="fa fa-chevron-right"
         >
           Keep It
-        </Button>
+        </StyledButton>
       </ButtonContainer>
-    </div>
+    </SwipeScreenContainer>
   );
 };
 

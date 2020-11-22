@@ -1,6 +1,6 @@
 import React from "react";
 import mondaySdk from "monday-sdk-js";
-import { SwipeScreen } from "./components";
+import { SwipeScreen, InstructionsScreen } from "./components";
 
 import "@fortawesome/fontawesome-free/css/all.css";
 import "monday-ui-react-core/dist/main.css";
@@ -111,13 +111,10 @@ class App extends React.Component {
             onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}
           />
         ) : (
-          <p data-testid="choose-backlog-group">
-            Please select a backlog group in the settings panel for this view.
-          </p>
+          <InstructionsScreen />
         )}
 
-        {/* TODO: DELETE AFTER DEV */}
-        <div style={{ maxWidth: "500px" }}>
+        {/* <div style={{ maxWidth: "500px" }}>
           <p>Group: {this.state.settings?.backlog_group}</p>
           <p>
             {this.state.lastAction &&
@@ -126,7 +123,7 @@ class App extends React.Component {
           <p>Items: {JSON.stringify(this.state.items, null, 1)}</p>
           <p>Trash: {JSON.stringify(this.state.trash, null, 1)}</p>
           <p>Keep: {JSON.stringify(this.state.keep, null, 1)}</p>
-        </div>
+        </div> */}
       </div>
     );
   }
