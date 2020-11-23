@@ -41,6 +41,8 @@ class App extends React.Component {
               items {
                 id
                 name
+                created_at
+                updated_at
               }
             }
           }
