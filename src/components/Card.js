@@ -38,7 +38,7 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: #784bd1;
+  background-color: #0085ff;
   color: #fff;
   padding: 24px 16px 16px;
   overflow-y: scroll;
@@ -56,28 +56,10 @@ const MetaContainer = styled.div`
   align-items: center;
 `;
 
-// const Meta = styled.div`
-//   flex: 1;
-// `;
-
-// const MetaTitle = styled.p`
-//   margin: 0;
-//   font-weight: bold;
-//   color: #6e6f8f;
-// `;
-
-// const MetaData = styled.p`
-//   margin: 0;
-// `;
-
 const TooltipContainer = styled.div`
-  //   position: relative;
-  //   bottom: -10px;
-`;
-
-const StyledButton = styled(Button)`
-  //   align-self: flex-end;
-  //   margin-bottom: 8px;
+  opacity: 0.32;
+  position: relative;
+  bottom: -2px;
 `;
 
 const Card = ({ item }) => {
@@ -92,7 +74,7 @@ const Card = ({ item }) => {
             <Tooltip
               showDelay={300}
               position={"top"}
-              moveBy={{ main: 16, secondary: 0 }}
+              moveBy={{ main: 24, secondary: 0 }}
               content={
                 <>
                   <div>
@@ -109,13 +91,13 @@ const Card = ({ item }) => {
                 icon={Activity}
                 iconLabel="my bolt svg icon"
                 clickable
-                iconSize={24}
+                iconSize={32}
               />
             </Tooltip>
           </TooltipContainer>
-          <StyledButton
+          <Button
             size={Button.sizes.SMALL}
-            kind={Button.kinds.SECONDARY}
+            kind={Button.kinds.TERTIARY}
             color={Button.colors.ON_PRIMARY_COLOR}
             onClick={() => {
               // TODO: updatee to `kind: "columns"` after API is fixed
@@ -126,19 +108,9 @@ const Card = ({ item }) => {
             }}
           >
             View Item
-          </StyledButton>
+          </Button>
         </MetaContainer>
       </TitleContainer>
-      {/* <MetaContainer>
-            <Meta>
-            <MetaTitle>Created</MetaTitle>
-            <MetaData>{}</MetaData>
-            </Meta>
-            <Meta>
-            <MetaTitle>Updated</MetaTitle>
-            <MetaData>{}</MetaData>
-            </Meta>
-            </MetaContainer> */}
     </CardContainer>
   );
 };
