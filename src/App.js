@@ -8,6 +8,8 @@ import "./App.css";
 
 export const monday = mondaySdk();
 
+export const MondayContext = React.createContext();
+
 const DELETE_DIR = "left";
 const KEEP_DIR = "right";
 
@@ -73,6 +75,7 @@ class App extends React.Component {
       // TODO: confirm there's no situation where this could change on the same instance
       // this.pullGroupData();
     });
+    monday.execute("openItemCard", { itemId: 867111713, kind: "updates" });
   }
 
   swipeOnTopItem(direction) {
@@ -102,19 +105,21 @@ class App extends React.Component {
   render() {
     const hasSelectedBacklogGroup = this.state.settings.backlog_group ?? false;
     return (
-      <div className="App">
-        {hasSelectedBacklogGroup ? (
-          <SwipeScreen
-            loading={this.state.loading}
-            items={this.state.items}
-            onSwipe={this.onSwipe.bind(this)}
-            onTrashButtonPress={() => this.swipeOnTopItem(DELETE_DIR)}
-            onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}
-          />
-        ) : (
-          <InstructionsScreen />
-        )}
-      </div>
+      <MondayContext.Provider value={monday}>
+        <div className="App">
+          {hasSelectedBacklogGroup ? (
+            <SwipeScreen
+              loading={this.state.loading}
+              items={this.state.items}
+              onSwipe={this.onSwipe.bind(this)}
+              onTrashButtonPress={() => this.swipeOnTopItem(DELETE_DIR)}
+              onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}
+            />
+          ) : (
+            <InstructionsScreen />
+          )}
+        </div>
+      </MondayContext.Provider>
     );
   }
 }

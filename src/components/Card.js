@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 // import Moment from "moment";
 import { Button } from "monday-ui-react-core";
+import { MondayContext } from "../App";
 
 // const formatDate = (dateString) => {
 //   const date = new Moment(dateString);
@@ -74,7 +75,7 @@ const StyledButton = styled(Button)`
 `;
 
 const Card = ({ item }) => {
-  console.log("*******", item);
+  const monday = useContext(MondayContext);
   return (
     <CardContainer>
       <TitleContainer>
@@ -83,6 +84,13 @@ const Card = ({ item }) => {
           size={Button.sizes.SMALL}
           kind={Button.kinds.SECONDARY}
           color={Button.colors.ON_PRIMARY_COLOR}
+          onClick={() => {
+            // TODO: updatee to `kind: "columns"` after API is fixed
+            monday.execute("openItemCard", {
+              itemId: item.id,
+              kind: "updates",
+            });
+          }}
         >
           View Item
         </StyledButton>

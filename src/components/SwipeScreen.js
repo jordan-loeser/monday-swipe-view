@@ -37,7 +37,7 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  margin: 0px 48px;
+  margin: 0px 12px;
 `;
 
 const LoaderContainer = styled.div`
