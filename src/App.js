@@ -75,7 +75,6 @@ class App extends React.Component {
       // TODO: confirm there's no situation where this could change on the same instance
       // this.pullGroupData();
     });
-    monday.execute("openItemCard", { itemId: 867111713, kind: "updates" });
   }
 
   swipeOnTopItem(direction) {
