@@ -37,7 +37,7 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  margin: 0px 8px;
+  margin: 0px 48px;
 `;
 
 const LoaderContainer = styled.div`
@@ -85,7 +85,7 @@ const SwipeScreen = ({
             onClick={onTrashButtonPress}
             disabled={!(items.length > 0)}
             size={Button.sizes.LARGE}
-            kind={Button.kinds.SECONDARY}
+            kind={Button.kinds.PRIMARY}
             color={Button.colors.NEGATIVE}
             leftIcon="fa fa-chevron-left"
           >
@@ -95,7 +95,7 @@ const SwipeScreen = ({
             onClick={onKeepButtonPress}
             disabled={!(items.length > 0)}
             size={Button.sizes.LARGE}
-            kind={Button.kinds.SECONDARY}
+            kind={Button.kinds.PRIMARY}
             color={Button.colors.POSITIVE}
             rightIcon="fa fa-chevron-right"
           >
