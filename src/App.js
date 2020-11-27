@@ -108,6 +108,7 @@ class App extends React.Component {
             <SwipeScreen
               loading={this.state.loading}
               items={this.state.items}
+              trash={this.state.trash}
               onSwipe={this.onSwipe.bind(this)}
               onTrashButtonPress={() => this.swipeOnTopItem(DELETE_DIR)}
               onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}

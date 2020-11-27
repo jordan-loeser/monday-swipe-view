@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TinderCard from "react-tinder-card";
 import { Button, Loader } from "monday-ui-react-core";
-import Card from "./Card";
+import { Card, TrashButton } from "./index";
 
 const SwipeScreenContainer = styled.div`
   display: flex;
@@ -20,6 +20,9 @@ const CardContainer = styled.div`
   width: 100vh;
   max-width: 260px;
   min-height: 384px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Swipable = styled(TinderCard)`
@@ -49,11 +52,19 @@ const LoaderContainer = styled.div`
 const Instructions = styled.p`
   align-self: center;
   text-align: center;
+}
+`;
+
+const TrashButtonContainer = styled.div`
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
 `;
 
 const SwipeScreen = ({
   loading,
   items,
+  trash,
   onSwipe,
   onTrashButtonPress,
   onKeepButtonPress,
@@ -68,10 +79,13 @@ const SwipeScreen = ({
               <Loader svgClassName="loader-size-md" />
             </LoaderContainer>
           ) : (
-            <Instructions data-testid="items-empty-instructions">
-              You've swiped on all the items! Press finish or select a new
-              board.
-            </Instructions>
+            <>
+              <Instructions data-testid="items-empty-instructions">
+                You've swiped on all the items! Open the trash to confirm and
+                delete.
+              </Instructions>
+              <TrashButton trash={trash} />
+            </>
           )}
         </CardContainer>
       ) : (
@@ -110,6 +124,11 @@ const SwipeScreen = ({
               Keep It
             </StyledButton>
           </ButtonContainer>
+          {trash.length > 0 && (
+            <TrashButtonContainer>
+              <TrashButton trash={trash} />
+            </TrashButtonContainer>
+          )}
         </>
       )}
     </SwipeScreenContainer>
