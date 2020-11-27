@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import Moment from "moment";
 import { Button, Tooltip } from "monday-ui-react-core";
-import Icon from "monday-ui-react-core/dist/Icon";
-import Activity from "monday-ui-react-core/dist/icons/Activity";
 import { MondayContext } from "../App";
+import ActivitySymbol from "./ActivitySymbol";
 
 const formatDate = (dateString) => {
   const date = new Moment(dateString);
@@ -64,7 +63,6 @@ const TooltipContainer = styled.div`
 
 const Card = ({ item }) => {
   const monday = useContext(MondayContext);
-  console.log("***", Icon);
   return (
     <CardContainer>
       <TitleContainer>
@@ -86,13 +84,7 @@ const Card = ({ item }) => {
                 </>
               }
             >
-              <Icon
-                iconType={"SVG"}
-                icon={Activity}
-                iconLabel="my bolt svg icon"
-                clickable
-                iconSize={32}
-              />
+              <ActivitySymbol color={"#fff"} />
             </Tooltip>
           </TooltipContainer>
           <Button
@@ -103,7 +95,7 @@ const Card = ({ item }) => {
               // TODO: updatee to `kind: "columns"` after API is fixed
               monday.execute("openItemCard", {
                 itemId: item.id,
-                kind: "updates",
+                kind: "columns",
               });
             }}
           >

@@ -46,6 +46,11 @@ const LoaderContainer = styled.div`
   margin: 0 auto;
 `;
 
+const Instructions = styled.p`
+  align-self: center;
+  text-align: center;
+`;
+
 const SwipeScreen = ({
   loading,
   items,
@@ -68,15 +73,16 @@ const SwipeScreen = ({
                 key={`swipe-${i}`}
                 onSwipe={(dir) => onSwipe(dir, item)}
                 preventSwipe={["up", "down"]}
+                flickOnSwipe
               >
                 <Card item={item} />
               </Swipable>
             ))}
           </div>
         ) : (
-          <p data-testid="items-empty-instructions">
+          <Instructions data-testid="items-empty-instructions">
             You've swiped on all the items! Press finish or select a new board.
-          </p>
+          </Instructions>
         )}
       </CardContainer>
       {!loading && (
