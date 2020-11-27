@@ -99,6 +99,26 @@ class App extends React.Component {
     this.setState({ lastAction: { direction, name: swipedItem.name } });
   }
 
+  onEmptyTrash() {
+    const { delete_mode: deleteMode } = this.state.settings;
+    const mutationType =
+      deleteMode === "delete" ? "delete_item" : "archive_item";
+    const mutation = `
+      mutation {
+        ${this.state.trash.reduce(
+          (acc, curr) =>
+            acc + `del${curr.id}: ${mutationType}(item_id: ${curr.id}) { id }`,
+          ""
+        )}
+      }
+    `;
+
+    this.setState({ loading: true });
+    monday.api(mutation).then((res) => {
+      this.setState({ loading: false, trash: [] });
+    });
+  }
+
   render() {
     const hasSelectedBacklogGroup = this.state.settings.backlog_group ?? false;
     return (
@@ -112,6 +132,7 @@ class App extends React.Component {
               onSwipe={this.onSwipe.bind(this)}
               onTrashButtonPress={() => this.swipeOnTopItem(DELETE_DIR)}
               onKeepButtonPress={() => this.swipeOnTopItem(KEEP_DIR)}
+              onEmptyTrash={this.onEmptyTrash.bind(this)}
             />
           ) : (
             <InstructionsScreen />

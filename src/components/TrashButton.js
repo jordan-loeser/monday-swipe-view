@@ -4,7 +4,7 @@ import { Button } from "monday-ui-react-core";
 
 const Container = styled.div`
   position: relative;
-  width: 91px;
+  width: 145px;
   height: 40px;
 `;
 
@@ -28,11 +28,11 @@ const TrashButton = ({ trash, onClick }) => (
     <Button
       size={Button.sizes.MEDIUM}
       kind={Button.kinds.SECONDARY}
-      rightIcon="fa fa-trash-alt"
+      leftIcon="fa fa-trash-alt"
       ariaLabel="Open Trash"
       onClick={onClick}
     >
-      View
+      Empty Trash
     </Button>
   </Container>
 );

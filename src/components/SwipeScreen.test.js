@@ -10,7 +10,9 @@ test("Does not render if no items are passed", () => {
 });
 
 test("Shows loader when loading", () => {
-  const { queryByTestId } = render(<SwipeScreen loading={true} items={[]} />);
+  const { queryByTestId } = render(
+    <SwipeScreen loading={true} items={[]} trash={[]} />
+  );
   expect(queryByTestId("swipe-screen")).toBeInTheDocument();
   expect(queryByTestId("swipe-loader")).toBeInTheDocument();
   expect(queryByTestId("swipe-cards")).not.toBeInTheDocument();
@@ -19,7 +21,7 @@ test("Shows loader when loading", () => {
 
 test("Shows cards when there are items remaining", () => {
   const { queryByTestId } = render(
-    <SwipeScreen loading={false} items={mockItems} />
+    <SwipeScreen loading={false} items={mockItems} trash={[]} />
   );
   expect(queryByTestId("swipe-screen")).toBeInTheDocument();
   expect(queryByTestId("swipe-loader")).not.toBeInTheDocument();
@@ -28,7 +30,9 @@ test("Shows cards when there are items remaining", () => {
 });
 
 test("Shows instructions when all items have been swiped on", () => {
-  const { queryByTestId } = render(<SwipeScreen loading={false} items={[]} />);
+  const { queryByTestId } = render(
+    <SwipeScreen loading={false} items={[]} trash={[]} />
+  );
   expect(queryByTestId("swipe-screen")).toBeInTheDocument();
   expect(queryByTestId("swipe-loader")).not.toBeInTheDocument();
   expect(queryByTestId("swipe-cards")).not.toBeInTheDocument();

@@ -52,7 +52,7 @@ const LoaderContainer = styled.div`
 const Instructions = styled.p`
   align-self: center;
   text-align: center;
-}
+  margin-top: 0;
 `;
 
 const TrashButtonContainer = styled.div`
@@ -68,6 +68,7 @@ const SwipeScreen = ({
   onSwipe,
   onTrashButtonPress,
   onKeepButtonPress,
+  onEmptyTrash,
 }) => {
   if (!items) return null;
   return (
@@ -81,10 +82,27 @@ const SwipeScreen = ({
           ) : (
             <>
               <Instructions data-testid="items-empty-instructions">
-                You've swiped on all the items! Open the trash to confirm and
-                delete.
+                You've swiped on all the items!
               </Instructions>
-              <TrashButton trash={trash} />
+              <Instructions>
+                Empty the trash or select a new group to start fresh.
+              </Instructions>
+              <br />
+              <TrashButton trash={trash} onClick={() => onEmptyTrash()} />
+              <br />
+              <br />
+              <Button
+                size={Button.sizes.SMALL}
+                kind={Button.kinds.TERTIARY}
+                onClick={() => {
+                  window.open(
+                    "https://support.monday.com/hc/en-us/articles/115005312729-The-Recycle-Bin",
+                    "_blank"
+                  );
+                }}
+              >
+                View Removed Items
+              </Button>
             </>
           )}
         </CardContainer>
@@ -126,7 +144,7 @@ const SwipeScreen = ({
           </ButtonContainer>
           {trash.length > 0 && (
             <TrashButtonContainer>
-              <TrashButton trash={trash} />
+              <TrashButton trash={trash} onClick={() => onEmptyTrash()} />
             </TrashButtonContainer>
           )}
         </>
