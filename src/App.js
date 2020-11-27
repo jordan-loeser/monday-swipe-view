@@ -72,8 +72,6 @@ class App extends React.Component {
     });
     monday.listen("context", (res) => {
       this.setState({ context: res.data });
-      // TODO: confirm there's no situation where this could change on the same instance
-      // this.pullGroupData();
     });
   }
 

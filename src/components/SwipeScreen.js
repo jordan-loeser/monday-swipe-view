@@ -61,13 +61,22 @@ const SwipeScreen = ({
   if (!items) return null;
   return (
     <SwipeScreenContainer data-testid="swipe-screen">
-      <CardContainer>
-        {loading ? (
-          <LoaderContainer data-testid="swipe-loader">
-            <Loader svgClassName="loader-size-md" />
-          </LoaderContainer>
-        ) : items.length > 0 ? (
-          <div data-testid="swipe-cards">
+      {loading || items.length === 0 ? (
+        <CardContainer>
+          {loading ? (
+            <LoaderContainer data-testid="swipe-loader">
+              <Loader svgClassName="loader-size-md" />
+            </LoaderContainer>
+          ) : (
+            <Instructions data-testid="items-empty-instructions">
+              You've swiped on all the items! Press finish or select a new
+              board.
+            </Instructions>
+          )}
+        </CardContainer>
+      ) : (
+        <>
+          <CardContainer data-testid="swipe-cards">
             {items.map((item, i) => (
               <Swipable
                 key={`swipe-${i}`}
@@ -78,36 +87,30 @@ const SwipeScreen = ({
                 <Card item={item} />
               </Swipable>
             ))}
-          </div>
-        ) : (
-          <Instructions data-testid="items-empty-instructions">
-            You've swiped on all the items! Press finish or select a new board.
-          </Instructions>
-        )}
-      </CardContainer>
-      {!loading && (
-        <ButtonContainer>
-          <StyledButton
-            onClick={onTrashButtonPress}
-            disabled={!(items.length > 0)}
-            size={Button.sizes.LARGE}
-            kind={Button.kinds.PRIMARY}
-            color={Button.colors.NEGATIVE}
-            leftIcon="fa fa-chevron-left"
-          >
-            Trash It
-          </StyledButton>
-          <StyledButton
-            onClick={onKeepButtonPress}
-            disabled={!(items.length > 0)}
-            size={Button.sizes.LARGE}
-            kind={Button.kinds.PRIMARY}
-            color={Button.colors.POSITIVE}
-            rightIcon="fa fa-chevron-right"
-          >
-            Keep It
-          </StyledButton>
-        </ButtonContainer>
+          </CardContainer>
+          <ButtonContainer>
+            <StyledButton
+              onClick={onTrashButtonPress}
+              disabled={!(items.length > 0)}
+              size={Button.sizes.LARGE}
+              kind={Button.kinds.PRIMARY}
+              color={Button.colors.NEGATIVE}
+              leftIcon="fa fa-chevron-left"
+            >
+              Trash It
+            </StyledButton>
+            <StyledButton
+              onClick={onKeepButtonPress}
+              disabled={!(items.length > 0)}
+              size={Button.sizes.LARGE}
+              kind={Button.kinds.PRIMARY}
+              color={Button.colors.POSITIVE}
+              rightIcon="fa fa-chevron-right"
+            >
+              Keep It
+            </StyledButton>
+          </ButtonContainer>
+        </>
       )}
     </SwipeScreenContainer>
   );
