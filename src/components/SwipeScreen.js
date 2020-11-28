@@ -100,9 +100,10 @@ const SwipeScreen = ({
         </CardContainer>
       ) : (
         <>
-          <CardContainer data-testid="swipe-cards">
+          <CardContainer>
             {items.map((item, i) => (
               <Swipable
+                edata-testid="swipe-cards"
                 key={`swipe-${i}`}
                 onSwipe={(dir) => onSwipe(dir, item)}
                 preventSwipe={["up", "down"]}

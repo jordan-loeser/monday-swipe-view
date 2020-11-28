@@ -67,8 +67,11 @@ class App extends React.Component {
 
   componentDidMount() {
     monday.listen("settings", (res) => {
+      const prevBacklockGroup = this.state.settings?.backlog_group ?? null;
       this.setState({ settings: res.data });
-      this.pullGroupData();
+      if (prevBacklockGroup !== res.data?.backlog_group) {
+        this.pullGroupData();
+      }
     });
     monday.listen("context", (res) => {
       this.setState({ context: res.data });
