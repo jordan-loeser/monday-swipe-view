@@ -49,10 +49,29 @@ const LoaderContainer = styled.div`
   margin: 0 auto;
 `;
 
-const Instructions = styled.p`
-  align-self: center;
+const Instructions = styled.div`
   text-align: center;
-  margin-top: 0;
+  max-width: 260px;
+  height: 384px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  box-sizing: border-box;
+  background-color: #e6e9ef;
+  // border: 1px solid #c5c7d0;
+  overflow: hidden;
+`;
+
+const InstructionContents = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e6e9ef;
+  padding: 12px;
+  width: 100%;
 `;
 
 const TrashButtonContainer = styled.div`
@@ -73,38 +92,11 @@ const SwipeScreen = ({
   if (!items) return null;
   return (
     <SwipeScreenContainer data-testid="swipe-screen">
-      {loading || items.length === 0 ? (
+      {loading ? (
         <CardContainer>
-          {loading ? (
-            <LoaderContainer data-testid="swipe-loader">
-              <Loader svgClassName="loader-size-md" />
-            </LoaderContainer>
-          ) : (
-            <>
-              <Instructions data-testid="items-empty-instructions">
-                You've swiped on all the items!
-              </Instructions>
-              <Instructions>
-                Empty the trash or select a new group to start fresh.
-              </Instructions>
-              <br />
-              <TrashButton trash={trash} onClick={() => onEmptyTrash()} />
-              <br />
-              <br />
-              <Button
-                size={Button.sizes.SMALL}
-                kind={Button.kinds.TERTIARY}
-                onClick={() => {
-                  window.open(
-                    "https://support.monday.com/hc/en-us/articles/115005312729-The-Recycle-Bin",
-                    "_blank"
-                  );
-                }}
-              >
-                View Removed Items
-              </Button>
-            </>
-          )}
+          <LoaderContainer data-testid="swipe-loader">
+            <Loader svgClassName="loader-size-md" />
+          </LoaderContainer>
         </CardContainer>
       ) : (
         <>
@@ -119,6 +111,28 @@ const SwipeScreen = ({
                 <Card item={item} />
               </Swipable>
             ))}
+            {items.length === 0 && (
+              <Instructions data-testid="items-empty-instructions">
+                <div>
+                  <h2>You've swiped on everything!</h2>
+                  <p>Empty the trash or select a new group to start fresh.</p>
+                </div>
+                <InstructionContents>
+                  <Button
+                    size={Button.sizes.SMALL}
+                    kind={Button.kinds.TERTIARY}
+                    onClick={() => {
+                      window.open(
+                        "https://support.monday.com/hc/en-us/articles/115005312729-The-Recycle-Bin",
+                        "_blank"
+                      );
+                    }}
+                  >
+                    How can I view removed items?
+                  </Button>
+                </InstructionContents>
+              </Instructions>
+            )}
           </CardContainer>
           <ButtonContainer>
             <StyledButton
@@ -142,11 +156,9 @@ const SwipeScreen = ({
               Keep It
             </StyledButton>
           </ButtonContainer>
-          {trash.length > 0 && (
-            <TrashButtonContainer>
-              <TrashButton trash={trash} onClick={() => onEmptyTrash()} />
-            </TrashButtonContainer>
-          )}
+          <TrashButtonContainer>
+            <TrashButton trash={trash} onClick={() => onEmptyTrash()} />
+          </TrashButtonContainer>
         </>
       )}
     </SwipeScreenContainer>

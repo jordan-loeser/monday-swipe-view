@@ -8,13 +8,14 @@ const InstructionScreenContainer = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  background-color: #f5f6f8;
 `;
 
 const InstructionsScreen = () => (
   <InstructionScreenContainer data-testid="instructions">
-    <h1>Matchbox</h1>
-    <h2>Clean up your backlog</h2>
-    <p>Please select a backlog group in the settings panel for this view.</p>
+    {/* <h1>Matchbox</h1>
+    <h2>Clean up your backlog</h2> */}
+    <p>Please select a backlog group in the settings panel to use this view.</p>
   </InstructionScreenContainer>
 );
 

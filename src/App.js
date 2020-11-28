@@ -100,6 +100,8 @@ class App extends React.Component {
   }
 
   onEmptyTrash() {
+    if (this.state.trash.length === 0) return;
+
     const { delete_mode: deleteMode } = this.state.settings;
     const mutationType =
       deleteMode === "delete" ? "delete_item" : "archive_item";

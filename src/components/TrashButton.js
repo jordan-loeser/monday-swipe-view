@@ -22,7 +22,7 @@ const Counter = styled.div`
   z-index: 10000;
 `;
 
-const TrashButton = ({ trash, onClick }) => (
+const TrashButton = ({ trash, onClick, color }) => (
   <Container>
     <Counter>{trash.length}</Counter>
     <Button
@@ -31,6 +31,8 @@ const TrashButton = ({ trash, onClick }) => (
       leftIcon="fa fa-trash-alt"
       ariaLabel="Open Trash"
       onClick={onClick}
+      disabled={trash.length === 0}
+      color={color}
     >
       Empty Trash
     </Button>
