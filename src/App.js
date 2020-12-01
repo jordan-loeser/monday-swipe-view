@@ -67,9 +67,11 @@ class App extends React.Component {
 
   componentDidMount() {
     monday.listen("settings", (res) => {
-      const prevBacklockGroup = this.state.settings?.backlog_group ?? null;
+      const prevBacklogGroup = this.state.settings?.backlog_group ?? null;
+      // console.log("*******prevBacklogGroup", prevBacklogGroup);
+      // console.log("*******settings", res.data);
       this.setState({ settings: res.data });
-      if (prevBacklockGroup !== res.data?.backlog_group) {
+      if (!prevBacklogGroup || prevBacklogGroup !== res.data?.backlog_group) {
         this.pullGroupData();
       }
     });
@@ -87,7 +89,6 @@ class App extends React.Component {
   }
 
   onSwipe(direction, swipedItem) {
-    console.log("You swiped: " + direction, "on", swipedItem.id);
     if (direction === DELETE_DIR) {
       this.setState((prevState) => ({
         trash: prevState.trash.concat(swipedItem),
